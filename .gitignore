@@ -9,6 +9,9 @@
 # environment variables
 .env
 
+#vs-code workspace file
+*.code-workspace
+
 # Test binary, built with `go test -c`
 *.test
 
