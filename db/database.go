@@ -2,19 +2,29 @@ package db
 
 import (
 	"fmt"
+	"log"
 	"os"
 
-	"github.com/go-pg/pg/v10"
 	"github.com/joho/godotenv"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-func GetConnection() *pg.DB {
+func GetConnection() *gorm.DB {
 	godotenv.Load()
-	db := pg.Connect(&pg.Options{
-		Addr:     fmt.Sprintf("%v:%v", os.Getenv("DB_HOST"), os.Getenv("DB_PORT")),
-		User:     os.Getenv("DB_USER"),
-		Password: os.Getenv("DB_PASSWORD"),
-		Database: os.Getenv("DB_DATABASE"),
-	})
+
+	dsn := fmt.Sprintf(
+		"host=%v user=%v password=%v dbname=%v port=%v",
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_DATABASE"),
+		os.Getenv("DB_PORT"),
+	)
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	return db
 }
