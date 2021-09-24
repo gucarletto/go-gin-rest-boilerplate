@@ -8,7 +8,8 @@ import (
 func Start() {
 	router := gin.Default()
 
-	routes.GetRoutesV1(router)
+	routes.AddRootRoutes(router)
+	routes.AddRoutesV1(router)
 
 	router.Run(":4242")
 }

@@ -2,10 +2,15 @@ package routes
 
 import "github.com/gin-gonic/gin"
 
-func GetRoutesV1(router *gin.Engine) *gin.RouterGroup {
+func AddRootRoutes(router *gin.Engine) {
+	root := router.Group("/")
+	root.GET("status", getStatus)
+}
+
+func AddRoutesV1(router *gin.Engine) {
 	v1 := router.Group("v1")
 
-	v1.GET("status", getStatus)
+	v1.POST("/auth")
 
 	v1.GET("users/:id")
 	v1.GET("users")
@@ -15,8 +20,6 @@ func GetRoutesV1(router *gin.Engine) *gin.RouterGroup {
 	v1.GET("transactions/:id")
 	v1.GET("transactions")
 	v1.POST("transactions")
-
-	return v1
 }
 
 func getStatus(c *gin.Context) {
