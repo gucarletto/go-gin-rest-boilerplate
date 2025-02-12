@@ -8,7 +8,8 @@ services:
     networks:
       - go-api-net
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   db:
     image: postgres:latest
     container_name: go-api-db
@@ -16,9 +17,16 @@ services:
       - "5432:5432"
     networks:
       - go-api-net
+    restart: always
     environment:
       POSTGRES_USER: go-api
       POSTGRES_PASSWORD: go-api
       POSTGRES_DB: go-api
+    healthcheck:
+      test: pg_isready -U go-api
+    volumes:
+      - postgres:/var/lib/postgresql/data
 networks:
-  go-api-net:
+  go-api-net: {}
+volumes:
+  postgres:
