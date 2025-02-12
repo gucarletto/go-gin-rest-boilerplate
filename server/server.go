@@ -9,7 +9,7 @@ func Start() {
 	router := gin.Default()
 
 	routes.AddRootRoutes(router)
-	routes.AddRoutesV1(router)
+	routes.AddV1Routes(router)
 
 	router.Run(":4242")
 }

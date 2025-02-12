@@ -7,7 +7,7 @@ func AddRootRoutes(router *gin.Engine) {
 	root.GET("status", getStatus)
 }
 
-func AddRoutesV1(router *gin.Engine) {
+func AddV1Routes(router *gin.Engine) {
 	v1 := router.Group("v1")
 
 	v1.POST("/auth")

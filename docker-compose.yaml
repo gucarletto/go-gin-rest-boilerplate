@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  app:
+    container_name: go-api
+    build: .
+    ports:
+      - "9000:9000"
+    networks:
+      - go-api-net
+    depends_on:
+      - db
+  db:
+    image: postgres:latest
+    container_name: go-api-db
+    ports:
+      - "5432:5432"
+    networks:
+      - go-api-net
+    environment:
+      POSTGRES_USER: go-api
+      POSTGRES_PASSWORD: go-api
+      POSTGRES_DB: go-api
+networks:
+  go-api-net:
